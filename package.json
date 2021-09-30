@@ -1,0 +1,15 @@
+{
+  "name": "ed",
+  "version": "0.0.1",
+  "description": "ed the standard editor education",
+  "main": "index.js",
+  "repository": "http://github.com/dkkloimwieder/eded",
+  "author": "dkkloimwieder",
+  "license": "MIT",
+  "dependencies": {
+    "http-server": "^13.0.2"
+  },
+  "scripts" : {
+    "start" : "node_modules/.bin/http-server src"
+}
+}
