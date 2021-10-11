@@ -1,4 +1,4 @@
-# Ed Education in Javascript
+# Ed Editor V1 Javascript Edition
 
  `yarn install && yarn start` to run in your browser via `http-server`
 
