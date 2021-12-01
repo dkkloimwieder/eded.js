@@ -86,7 +86,7 @@ export class AddressParser {
       const newRegex = new RegExp(searchTerm);
       for (
         let i = currentAddress + 1;
-        i < currentAddress + buffer.length;
+        i < currentAddress + buffer.length + 1;
         i++
       ) {
         let iAdjusted = i % buffer.length;
@@ -144,9 +144,14 @@ export class AddressParser {
     let newIndex;
     do {
       let next = AddressFSM.addressMap[currentState.input[index]] || 'end';
-      [nextState, tmpAddress, newIndex] = machine[machine.current][
-        next
-      ].transition(currentState, tmpAddress, index);
+      if (machine[machine.current].hasOwnProperty(next)) {
+        [nextState, tmpAddress, newIndex] = machine[machine.current][
+          next
+        ].transition(currentState, tmpAddress, index);
+      } else {
+        throw new AddressParserError(currentState.input);
+      }
+
       machine.current = next;
       currentState = { ...currentState, ...nextState };
       index = newIndex;

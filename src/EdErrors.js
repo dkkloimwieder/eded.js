@@ -18,7 +18,8 @@ export class ZeroAddressingError extends Error {
 }
 export class BufferBoundsError extends Error {
   constructor(address, bufferLength) {
-    super(`Cannot access address "${address}" of buffer length "${bufferLength}"`);
+    const adjustedBufferLength = parseInt(bufferLength) -1;
+    super(`Cannot access address "${address}" of buffer length "${adjustedBufferLength}"`);
     this.name = 'BufferBoundsError';
   }
 }

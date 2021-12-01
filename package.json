@@ -9,7 +9,7 @@
   "dependencies": {
     "http-server": "^13.0.2"
   },
-  "scripts" : {
-    "start" : "node_modules/.bin/http-server src"
-}
+  "scripts": {
+    "start": "node_modules/.bin/http-server src"
+  }
 }

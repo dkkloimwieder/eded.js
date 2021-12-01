@@ -24,7 +24,7 @@
   flex-direction: column-reverse;
   overflow: auto;
   height: 100%;
-  max-height: 30ch;
+  max-height: 50ch;
 }
 
 #errors {
@@ -37,7 +37,7 @@
   flex-direction: column;
 }
 .ed-container {
-  max-width: 30ch;
+  width: 80%;
   margin: 2rem auto;
   border: 3px solid #333;
   font-family: monospace;
@@ -47,7 +47,7 @@
 .error-container {
   height: 100%;
   max-height: 10ch;
-  max-width: 30ch;
+  max-width: 80%;
   overflow: auto;
   margin: 1rem auto;
   font-size: 1.2rem;

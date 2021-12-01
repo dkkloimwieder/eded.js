@@ -17,32 +17,7 @@ export class Ed {
     backup: [],
     restrictions: null,
   };
-  static getAddress(
-    address,
-    currentAddress,
-    zero = true,
-    fallback = [currentAddress, currentAddress]
-  ) {
-    if (address.length > 0) {
-      if (zero && address.length > 1) {
-        if (
-          address[address.length - 2] === 0 ||
-          address[address.length - 1] === 0
-        ) {
-          throw new ZeroAddressingError();
-        }
-        return [address[address.length - 2], address[address.length - 1]];
-      } else if (zero) {
-        if (address[0] === 0) {
-          throw new ZeroAddressingError();
-        }
-        return [address[0], address[0]];
-      } else {
-        return [address[address.length - 1], address[address.length - 1]];
-      }
-    }
-    return fallback;
-  }
+
   execute(state) {
     if (!state.marks) {
       const addressedState = AddressParser.buildAddress(state); //AddressFSM.AddressParser.
@@ -135,7 +110,14 @@ export class Ed {
         try {
           next = this.execute(this.state);
         } catch (e) {
-          this.state = { ...this.state, marks: null, restrictions: null };
+          this.state = {
+            ...this.state,
+            marks: null,
+            restrictions: null,
+            address: [],
+            input: '',
+            status: 'initial',
+          };
           return { explanation: `${e.name}: ${e.message}`, lines: '?' };
         }
         this.state = { ...this.state, ...next };

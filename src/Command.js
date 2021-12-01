@@ -6,8 +6,24 @@ import {
   FileReadError,
   MatchError,
   StorageError,
+  BufferBoundsError,
 } from './EdErrors.js';
 
+export function incrementPrint(state) {
+  if (state.currentAddress < state.buffer.length - 1) {
+    const newCurrentAddress = state.currentAddress + 1;
+    const { output, currentAddress } = print({
+      ...state,
+      currentAddress: newCurrentAddress,
+    });
+    return { output, currentAddress };
+  } else {
+    throw new BufferBoundsError(
+      state.currentAddress + 1,
+      state.buffer.length - 1
+    );
+  }
+}
 export function getAddress(
   address,
   currentAddress,
@@ -34,21 +50,7 @@ export function getAddress(
   }
   return fallback;
 }
-export function incrementPrint(state) {
-  if (state.currentAddress < state.buffer.length - 1) {
-    const newCurrentAddress = state.currentAddress + 1;
-    const { output, currentAddress } = Command.print({
-      ...state,
-      currentAddress: newCurrentAddress,
-    });
-    return { output, currentAddress };
-  } else {
-    throw new BufferBoundsError(
-      state.currentAddress + 1,
-      state.buffer.length - 1
-    );
-  }
-}
+
 export function print(
   { address, buffer, currentAddress, output },
   list = false
@@ -161,7 +163,7 @@ export function substitute({ input, address, buffer, currentAddress, regex }) {
     /^([^ ]{1})(?<first>.*?)(?<!\\)\1(?<second>.*?)(?<!\\)\1(?<remaining>.*?)$/;
   const match = re.exec(input);
   let newFirst;
-  if(match===null) {
+  if (match === null) {
     throw new CommandParseError(input, 'substitute');
   }
   if (!match?.groups?.first) {
@@ -180,7 +182,7 @@ export function substitute({ input, address, buffer, currentAddress, regex }) {
     let fail = true;
     const first = RegExp(newFirst);
     for (let i = addresses[0]; i <= addresses[1]; i++) {
-      if (first.exec(newBuffer[i])){
+      if (first.exec(newBuffer[i])) {
         let replacement = newBuffer[i].replace(first, second);
         fail = false;
         newBuffer.splice(i, 1, replacement);
