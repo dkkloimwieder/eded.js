@@ -7,7 +7,7 @@
   "author": "dkkloimwieder",
   "license": "MIT",
   "dependencies": {
-    "http-server": "^13.0.2"
+    "http-server": "^14.1.0"
   },
   "scripts": {
     "start": "node_modules/.bin/http-server src"
